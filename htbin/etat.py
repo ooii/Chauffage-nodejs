@@ -4,7 +4,7 @@ import subprocess
 import sqlite3
 import re
 import Levenshtein
-import guessit
+import json
 import os
 import zipfile
 import commands
@@ -56,9 +56,9 @@ token = "e3d3549b644f40ad4b2976a7f3b3f442661326b6"
 myCore = SparkCore(mail, password, device_id)
 etats = myCore.readVariable('etatfp')
 chauffages = [["Cuisine","3"], ["Entrée","1"], ["Emma","2"], ["Milieu","4"], ["Salon","5"],["Salle de Bain","6"],["Douche","7"]]
-etats = myCore.readVariable('etatfp')
 
 def printEtats():
+    etats = myCore.readVariable('etatfp')
     print '''
 	<div class="chauffages">
 	<div class="listeChauffages">
@@ -75,15 +75,15 @@ def printEtats():
             print '<td><input type="radio" name="'+etat+'" value="E"', "checked" if (etatActuel == "E") else "", "></td>"
             print '<td><input type="radio" name="'+etat+'" value="H"', "checked" if (etatActuel == "H") else "", "></td>"
             print '<td><input type="radio" name="'+etat+'" value="A"', "checked" if (etatActuel == "A") else "", "></td>"
+        print '</tr>'
     print '''
 	</table>
-	'<input type="hidden" name="action" value="setFp">'
-	</div>
+	<input type="hidden" name="action" value="setFp">
+	<input type="submit" value="Submit">
+	</form>
+    </div>
 	</div>
 	'''
-
-    print '<input type="submit" value="Submit">'
-    print '</form>'
 
 
 def printHtmlBegin():
@@ -93,7 +93,7 @@ def printHtmlBegin():
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, user-scalable=yes" />
 	<link rel="stylesheet" href="/style.css" />
-	<TITLE>Sous-titres</TITLE></HEAD>
+	<TITLE>Chauffage. Spark.io. OOIIIO</TITLE></HEAD>
 	<body>
     '''
 
@@ -105,71 +105,43 @@ def printHtmlEnd():
 	'''
 
 
-def printBack():
-    print '''
-	<form action="http://subs.lgc.benbadis.fr">
-	Revenir vers la page principale <input type="submit" value="Back">
-	</form>
-	window.location.href = 'http://subs.lgc.benbadis.fr';
-	'''
-
-
-
-def printJavaScript():
-    print '''
-	<script type="text/javascript"> src="scripts.js"</script>
-	'''
-
-
 def setfp(fs):
     params = list("AAAAAAA")
     for i in range(1,8,1):
         etat = fs[str(i)].value
         params[i-1] = etat
-        #lgr.debug(etat)
+        lgr.debug(etat)
     params = "".join(params)
     lgr.debug("params est"+params)
-
-
+    r = myCore.sendFunctionRequest('fp', params)
+    reponse = json.loads(r)
+    printHtmlBegin()
+    if not reponse['return_value']:
+        print ("OK.")
+    else:
+        print ("Ouhla, ça n'a pas marché.")
+    printHtmlEnd()
 
 
 def main():
 
     fs = cgi.FieldStorage()
+    lgr.debug(fs)
     if "action" in fs:
         action = fs["action"].value
-        lgr.debug("action définie"+action)
+        lgr.debug("action définie, "+action)
         setfp(fs)
     else:
         lgr.debug("pas d'action")
 
-    #if fs["action"] == "setFp":
-    #    commande = "AAAAAAA"
-    #    for i in range(1,8):
-    #        commande[srt(i)]=fs[srt(i)].value
-#
-    #lgr.debug(fs["1"])
-    #lgr.debug (fs)
-    #setfp(fs)
-    #url = fs["1"].value
-    #action = fs['action'].value
-
-    #print "action is ", action
-    #if (action == 'None'):
-    #    lgr.debug ('url est '+url)
-    #    videoFile = getVideoName(url)
-
     ##On met l'entête du fichier
     printHtmlBegin()
-    #printJavaScript()
 
     ###div pour les séries à activer/désactiver
     printEtats()
 
     ##finir la page web
-    #printJavaScript()
     printHtmlEnd()
-
 
 if __name__ == "__main__":
     main()
