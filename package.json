@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "express": "latest",
+    "request": "^2.65.0",
     "spark": "^1.0.0"
   }
 }
