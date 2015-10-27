@@ -1,0 +1,11 @@
+{
+  "name": "chauffage-spark",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "node Server.js"
+  },
+  "dependencies": {
+    "express": "latest",
+    "spark": "^1.0.0"
+  }
+}
