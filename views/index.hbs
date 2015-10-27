@@ -1,0 +1,9 @@
+{{#each chauffages}}
+	<tr>
+        <td>{{this.name}}</td>
+        <label><td><input type="radio" name="{{this.id}}" {{#if this.confort}}checked{{/if}}></td></label>
+        <label><td><input type="radio" name="{{this.id}}" {{#if this.eco}}checked{{/if}}></td></label>
+        <label><td><input type="radio" name="{{this.id}}" {{#if this.horsgel}}checked{{/if}}></td></label>
+        <label><td><input type="radio" name="{{this.id}}" {{#if this.arret}}checked{{/if}}></td></label>
+      </tr>
+ {{/each}}
