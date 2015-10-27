@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: latin-1 -*-
+# -*- coding: utf-8 -*-
 import subprocess
 import sqlite3
 import re
@@ -55,7 +55,7 @@ password = "lekafel"
 token = "e3d3549b644f40ad4b2976a7f3b3f442661326b6"
 myCore = SparkCore(mail, password, device_id)
 etats = myCore.readVariable('etatfp')
-chauffages = [["Cuisine","3"], ["Entrée","1"], ["Emma","2"], ["Milieu","4"], ["Salon","5"],["Salle de Bain","6"],["Douche","7"]]
+chauffages = [["Entr&eacute;e","1"], ["Emma","2"], ["Cuisine","3"], ["Milieu","4"], ["Salon","5"],["Salle de Bain","6"],["Douche","7"]]
 
 def printEtats():
     etats = myCore.readVariable('etatfp')
@@ -65,7 +65,7 @@ def printEtats():
 	<form name="listeEtat" action="etat.py" method="get">
 	<table>
 	'''
-    print '<td>Pièce</td><td>Confort</td><td>Eco</td><td>Hors-Gel</td><td>Arrêt</td>'
+    print '<tr><td>Pi&egrave;ce</td><td>Confort</td><td>Eco</td><td>Hors-Gel</td><td>Arr&ecirc;t</td></tr>'
     for chauffage, etat in chauffages:
         etatActuel = etats[int(etat)-1]
         print '<tr>'
@@ -92,11 +92,11 @@ def printHtmlBegin():
 	<HTML lang="fr"><HEAD>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, user-scalable=yes" />
-	<link rel="stylesheet" href="/style.css" />
 	<TITLE>Chauffage. Spark.io. OOIIIO</TITLE></HEAD>
 	<body>
     '''
 
+	#<link rel="stylesheet" href="/style.css" />
 
 def printHtmlEnd():
     print '''
