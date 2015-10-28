@@ -1,0 +1,6 @@
+htbin/SparkCloudAPI.pyc
+node_modules/*
+.swp
+databaseMySQL.txt
+personal_notes.txt
+config/default.json
