@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "body-parser": "^1.14.1",
+    "config": "^1.16.0",
     "express": "latest",
     "express-handlebars": "^2.0.1",
     "handlebars": "^4.0.3",

@@ -1,0 +1,15 @@
+{
+	"spark": {
+		"id": "",
+		"token": ""
+	},
+	"chauffages": {
+		"1": {"name":"Entrée", "disabled":false},
+		"2": {"name":"Chambre", "disabled":false},
+		"3": {"name":"Cuisine", "disabled":false},
+		"4": {"name":"Milieu", "disabled":true},
+		"5": {"name":"Salon", "disabled":false},
+		"6": {"name":"SDB", "disabled":false},
+		"7": {"name":"Douche", "disabled":false}
+	}
+}

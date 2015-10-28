@@ -1,3 +1,6 @@
+//Author: Farid Benbadis
+//
+
 var express = require("express");
 var http = require("http");
 var https = require("https");
@@ -5,16 +8,22 @@ var request = require('request');
 var spark = require('spark');
 var bodyParser = require('body-parser');
 var expressHbs = require('express-handlebars');
+var config = require('config');
 
 var app = express();
 var router = express.Router();
 var path = __dirname + '/views/';
-var token = "fcbe032df90e37d22e31ae006d4f71c5b92f2d96"
-var device_id = "54ff6b066672524852431867"
 
 var callback = function(err, body) {
   console.log('API call login completed on callback:', body);
 };
+
+//Configuration
+var spark = config.get('spark');
+var token = spark.token
+var device_id = spark.id
+
+var chauffages_id = config.get('chauffages');
 
 app.engine('hbs', expressHbs({extname:'hbs', defaultLayout:'main.hbs'}));
 app.set('view engine', 'hbs');
@@ -26,49 +35,17 @@ router.use(function (req,res,next) {
   console.log("/" + req.method);
   next();
 });
-//router.get('/', function(req, res){
-//  res.render('index');
-//});
-//app.get('/loop', function(req, res){
-//  var basketballPlayers = [
-//    {name: 'Lebron James', team: 'the Heat'},
-//    {name: 'Kevin Durant', team: 'the Thunder'},
-//    {name: 'Kobe Jordan',  team: 'the Lakers'}
-//  ];
-//  
-//  var days = [
-//    'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
-//  ];
-//  
-//  var data = {
-//    basketballPlayers: basketballPlayers,
-//    days: days
-//  };
-//  
-//  res.render('loop', data);
-//});
-//router.get("/",function(req,res){
-//  res.sendFile(path + "index.html");
-//});
 
-
-router.get("/about",function(req,res){
-  res.sendFile(path + "about.html");
-});
-
-router.get("/contact",function(req,res){
-  res.sendFile(path + "contact.html");
-});
 
 router.get("/",function(req,res){
   var chauffages = [
-    {arret: false, eco: false, confort:false, horsgel:false, name: 'Entrée', id: '1', etat: ''},
-    {arret: false, eco: false, confort:false, horsgel:false, name: 'Emma', id: '2', etat: ''},
-    {arret: false, eco: false, confort:false, horsgel:false, name: 'Cuisine', id: '3', etat: ''},
-    {arret: false, eco: false, confort:false, horsgel:false, name: 'Milieu', id: '4', etat: ''},
-    {arret: false, eco: false, confort:false, horsgel:false, name: 'Salon', id: '5', etat: ''},
-    {arret: false, eco: false, confort:false, horsgel:false, name: 'SDB', id: '6', etat: ''},
-    {arret: false, eco: false, confort:false, horsgel:false, name: 'Douche', id: '7', etat: ''}
+    {arret: false, eco: false, confort:false, horsgel:false, name: chauffages_id[1].name, id: '1', etat: '', disabled: chauffages_id[1].disabled},
+    {arret: false, eco: false, confort:false, horsgel:false, name: chauffages_id[2].name, id: '2', etat: '', disabled: chauffages_id[2].disabled},
+    {arret: false, eco: false, confort:false, horsgel:false, name: chauffages_id[3].name, id: '3', etat: '', disabled: chauffages_id[3].disabled},
+    {arret: false, eco: false, confort:false, horsgel:false, name: chauffages_id[4].name, id: '4', etat: '', disabled: chauffages_id[4].disabled},
+    {arret: false, eco: false, confort:false, horsgel:false, name: chauffages_id[5].name, id: '5', etat: '', disabled: chauffages_id[5].disabled},
+    {arret: false, eco: false, confort:false, horsgel:false, name: chauffages_id[6].name, id: '6', etat: '', disabled: chauffages_id[6].disabled},
+    {arret: false, eco: false, confort:false, horsgel:false, name: chauffages_id[7].name, id: '7', etat: '', disabled: chauffages_id[7].disabled}
   ];
 
   console.log("Récupération état de tous les chauffages");
@@ -106,30 +83,15 @@ router.get("/",function(req,res){
   });
 });
 
-//router.get('/simple', function(req, res){
-//  var data = {name: 'Gorilla'};
-//  res.render('simple', data);
-//});
-//
-//router.get('/logic', function(req, res){
-//  var data = {
-//    upIsUp: true,
-//    downIsUp: false,
-//    skyIsBlue: "yes"
-//  };
-//  
-//  res.render('logic', data);
-//});
-
 router.post("/",function(req,res){
   var chauffages = [
-    {arret: false, eco: false, confort:false, horsgel:false, name: 'Entrée', id: '1', etat: ''},
-    {arret: false, eco: false, confort:false, horsgel:false, name: 'Emma', id: '2', etat: ''},
-    {arret: false, eco: false, confort:false, horsgel:false, name: 'Cuisine', id: '3', etat: ''},
-    {arret: false, eco: false, confort:false, horsgel:false, name: 'Milieu', id: '4', etat: ''},
-    {arret: false, eco: false, confort:false, horsgel:false, name: 'Salon', id: '5', etat: ''},
-    {arret: false, eco: false, confort:false, horsgel:false, name: 'SDB', id: '6', etat: ''},
-    {arret: false, eco: false, confort:false, horsgel:false, name: 'Douche', id: '7', etat: ''}
+    {arret: false, eco: false, confort:false, horsgel:false, name: chauffages_id[1].name, id: '1', etat: '', disabled: chauffages_id[1].disabled},
+    {arret: false, eco: false, confort:false, horsgel:false, name: chauffages_id[2].name, id: '2', etat: '', disabled: chauffages_id[2].disabled},
+    {arret: false, eco: false, confort:false, horsgel:false, name: chauffages_id[3].name, id: '3', etat: '', disabled: chauffages_id[3].disabled},
+    {arret: false, eco: false, confort:false, horsgel:false, name: chauffages_id[4].name, id: '4', etat: '', disabled: chauffages_id[4].disabled},
+    {arret: false, eco: false, confort:false, horsgel:false, name: chauffages_id[5].name, id: '5', etat: '', disabled: chauffages_id[5].disabled},
+    {arret: false, eco: false, confort:false, horsgel:false, name: chauffages_id[6].name, id: '6', etat: '', disabled: chauffages_id[6].disabled},
+    {arret: false, eco: false, confort:false, horsgel:false, name: chauffages_id[7].name, id: '7', etat: '', disabled: chauffages_id[7].disabled}
   ];
 
   console.log("Changement état de tous les chauffages");
@@ -140,17 +102,14 @@ router.post("/",function(req,res){
   
   request({
     url: 'https://api.spark.io/v1/devices/'+device_id+'/fp?access_token='+token,
-    //qs: {from: 'blog example', time: +new Date()}, //Query string data
     method: 'POST',
     //Lets post the following key/values as form
     json: {
-      //access_token: token,
       params: params
     }}, function(error, response, body){
       if(response.statusCode != 200) {
         console.log(error);
         var data = {
-          //chauffages: chauffages,
           valeurOK : 'hidden',
           valeurNOK : '',
         };
