@@ -93,11 +93,17 @@ router.post("/",function(req,res){
     {arret: false, eco: false, confort:false, horsgel:false, name: chauffages_id[6].name, id: '6', etat: '', disabled: chauffages_id[6].disabled},
     {arret: false, eco: false, confort:false, horsgel:false, name: chauffages_id[7].name, id: '7', etat: '', disabled: chauffages_id[7].disabled}
   ];
+  //console.log(chauffages);
 
   console.log("Changement état de tous les chauffages");
+  console.log(req.body);
   params = '';
-  for(var i in req.body)
-    params += req.body[i]
+  for(var i=1;i<8;i++){ 
+    if (req.body[i])
+      params += req.body[i]
+    else // Dans le cas où un chauffage est désactivé
+      params += "A"
+  }
   console.log(params);
   
   request({
