@@ -7,6 +7,7 @@
   "dependencies": {
     "body-parser": "^1.14.1",
     "express": "latest",
+    "express-handlebars": "^2.0.1",
     "handlebars": "^4.0.3",
     "request": "^2.65.0",
     "spark": "^1.0.0"
