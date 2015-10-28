@@ -14,15 +14,15 @@
 
 
 
-<div class="alert alert-success">
+<div class="alert alert-success" {{valeurOK}}>
   <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-  <strong>OK !</strong>
+  <strong>Parfait !</strong>
 </div>
-<div class="alert alert-danger">
+<div class="alert alert-danger" {{valeurNOK}}>
   <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-  <strong>OK !</strong>
+  <strong>Attention, ça n'a pas marché !</strong>
 </div>
-<form>
+<form method="POST" action="/">
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>
