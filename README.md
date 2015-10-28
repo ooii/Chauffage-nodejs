@@ -9,4 +9,4 @@ node Server.js
 Par défaut, le serveur est dispo à http://localhost:9999
 
 ##Disclaimer
-Ça marche mais ça peut certainement êter amélioré et mieux fait.
+Ça marche mais ça peut certainement être amélioré et mieux conçu.
